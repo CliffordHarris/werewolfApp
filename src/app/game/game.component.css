@@ -1,0 +1,66 @@
+/* :host {
+    display: flex;
+    justify-content: center;
+} */
+
+.test {
+    background-color: #ffc0cb; 
+    font-size: 48px;
+}
+
+.mask {
+    font-family: 'Courier New', Courier, monospace;
+}
+
+.btn {
+    margin-right: 10px;
+}
+
+.done {
+    text-decoration: line-through;
+}
+
+.time {
+    font-size: 18px;
+    color: black;
+    margin-right: 10px;
+}
+
+
+.mat-expansion-panel-header[aria-disabled=true] {
+    color: inherit;
+    cursor: not-allowed;
+}
+
+.player-cont {
+    width: 100%;
+}
+
+.player-name {
+    padding-right: 1rem;
+    font-size: 24px;
+    font-weight: 300;
+}
+
+.mat-expansion-panel-header {
+    font-weight: 300;
+}
+
+.dead {
+    color: lightgray;
+}
+
+.task-done {
+    background: darkseagreen;
+    opacity: .8;
+}
+
+.mat-expansion-panel-header:hover {
+    opacity: 1;
+    /* background: transparent !important; */
+}
+
+/* .black-btn {
+    color: white !important;
+    background-color: black !important;
+} */

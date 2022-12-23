@@ -1,0 +1,37 @@
+<mat-grid-list cols="1" rowHeight="100px">
+    <mat-grid-tile>
+        <div style="font-size: 48px;">How many players?</div>
+    </mat-grid-tile>
+</mat-grid-list>
+
+<mat-grid-list cols="1" rowHeight="200px">
+    <mat-grid-tile>
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+            <!-- <h3>Name</h3> -->
+                <mat-form-field appearance="fill">
+                    <mat-label>Number of Players</mat-label>
+                    <!-- <mat-hint>heres a tip</mat-hint> -->
+                    <input matInput formControlName="userName" type="number" autocomplete="off">
+                </mat-form-field>
+    
+            <!-- <h3>Address</h3>
+        <div formGroupName="address">
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>Street</mat-label>
+                    <input matInput formControlName="street" autocomplete="off">
+                </mat-form-field>
+            </div>
+            <div>
+                <mat-form-field appearance="fill">
+                    <mat-label>City</mat-label>
+                    <input matInput formControlName="city" autocomplete="off">
+                </mat-form-field>
+            </div>
+        </div> -->
+        <div>
+            <button mat-raised-button [color]="!userName?.valid ? 'primary' : 'accent'">Submit</button>
+        </div>
+    </form>
+    </mat-grid-tile>
+</mat-grid-list>

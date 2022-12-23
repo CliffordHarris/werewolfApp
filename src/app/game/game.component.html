@@ -1,0 +1,319 @@
+<div class="container pb-5">
+  <div class="row mb-3">
+    <div class="col-sm-12">
+      <button class="btn btn-outline-danger" (click)="goTo('landing')">
+        Back
+      </button>
+
+      <span *ngIf="players.length > 0" class="float-end">
+        <button class="btn btn-outline-secondary" (click)="hideRoles()">
+          <span class="float-end">
+            <span>
+              {{rolesAreHidden ? 'Show' : 'Hide'}}
+            </span>
+            <span>
+              Roles
+            </span>
+          </span>
+        </button>
+      </span>
+
+      <span *ngIf="players.length === 0" class="float-end">
+        <button class="btn btn-secondary float-end" (click)="loadGame()">
+          Load Previous Game
+        </button>
+
+        <button class="btn btn-secondary" (click)="setupGame()">
+          Shuffle Deck
+        </button>
+      </span>
+
+      <span *ngIf="players.length > 0" class="float-end">
+        <span class="time">{{timeString}}</span>
+
+        <!-- <button class="btn btn-success" (click)="loadGame()">
+          Next
+        </button> -->
+      </span>
+
+
+    </div>
+
+  </div>
+  <div class="row" *ngIf="players.length > 0 && !gameIsOver">
+    <div class="col-sm-6">
+      <div class="text-center alert" [ngClass]="{'alert-warning': dayTime, 'alert-dark': !dayTime}" role="alert">
+        <div style="font-size: 22px;" *ngFor="let e of events; let i = index">
+          <span [ngClass]="e.done ? 'done' : ''" style="cursor: pointer" (click)="markDone(i)">
+            {{e.msg}}
+          </span>
+          <span *ngIf="e.msg === 'Accuse'" style="cursor: pointer;" (click)="markDone(i, true)"
+            matTooltip="SKIPS THE ACCUSE PROCESS" [matTooltipPosition]="'right'">
+            ❌
+          </span>
+        </div>
+      </div>
+    </div>
+
+    <!-- <div class="col-sm-6" *ngIf="loadingStory || story">
+      <div class="alert alert-info">
+        <div class="d-flex justify-content-center">
+          <div class="spinner-grow text-danger" role="status" *ngIf="loadingStory"></div>
+        </div>
+        <div style="font-size: 18px; padding-bottom: 10px;">
+          <h5>Story</h5>
+          {{story}}
+        </div>
+        <div style="white-space: pre-line;" *ngIf="themes">
+
+          <h5>Some Ideas</h5>
+          {{themes}}
+        </div>
+      </div>
+    </div> -->
+
+    <div class="col-sm-6">
+      <!-- <div *ngFor="let player of players; let i = index;">
+      <span (click)="showOne(i)" class="h2">
+        {{player.name}}
+      </span>
+      <span *ngIf="idx === i || !rolesAreHidden">
+        <span *ngIf="player.role === W" style="font-size: 24px;">
+          🐺
+        </span>
+        <span *ngIf="player.role !== W">
+          {{player.role}}
+        </span>
+      </span>
+    </div> -->
+
+      <mat-accordion>
+        <mat-expansion-panel *ngFor="let player of players; let i = index;">
+          <mat-expansion-panel-header (click)="showOne(i)" [ngClass]="{'task-done': currentDay > 1 && (player.completedAction || player.card.isPassivePower)}">
+            <mat-panel-title class="float-end">
+              <span class="player-cont">
+
+                <span style="vertical-align: text-bottom;" *ngIf="!dayTime && currentDay != 0">
+                  <span *ngIf="!player.completedAction && !player.card.isPassivePower">🔲 </span>
+                  <span *ngIf="player.completedAction || player.card.isPassivePower">✅ </span>
+                </span>
+
+                <span class="player-name" [ngClass]="{'dead': player.isDead}">{{player.name}}</span>
+                <span *ngIf="player.role === 'Villager' && currentDay > 0">
+                  <!-- ✅ -->
+                  Nothing to do
+                </span>
+              </span>
+              <span *ngIf="!rolesAreHidden">
+                <span *ngIf="player.role === W" style="font-size: 24px;">
+                  🐺
+                </span>
+                <span *ngIf="player.role !== W">
+                  {{player.role}}
+                </span>
+
+              </span>
+            </mat-panel-title>
+          </mat-expansion-panel-header>
+
+          <div class="text-center mb-2">{{player.role}}</div>
+
+          <div class="container">
+            <div class="row">
+              <div class="col-6">
+                <div *ngFor="let to of player.actionTo">
+                  <!-- {{to.text}} {{to.name}} {{to.extra}} -->
+                  <span>{{to.display}}</span>
+                </div>
+              </div>
+
+              <div class="col-6">
+                <div *ngFor="let from of player.actionFrom">
+                  <!-- {{from.text}} {{from.name}} -->
+                  <span>{{from.display}}</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+
+          <div class="row">
+            <!-- <button class="btn btn-danger btn-sm" [disabled]="player.isDead" (click)="kill(player)">
+              Kill
+            </button> -->
+            <div *ngIf="currentDay > 0 && !dayTime" class="mt-2">
+              <!-- <div> -->
+              <!-- <button mat-flat-button [matMenuTriggerFor]="killMenu" color="warn" [disabled]="player.isDead">Kill
+                {{player.name}}</button>
+              <mat-menu #killMenu="matMenu" yPosition="above">
+                <button mat-menu-item (click)="kill(player, 'Lynching')">Lynching</button>
+                <button mat-menu-item (click)="kill(player, 'Werewolf')"
+                  *ngIf="!player.card.isWerewolf">Werewolf</button>
+              </mat-menu> -->
+
+              <!-- <button mat-flat-button color="primary" class="float-end black-btn" *ngIf="player.card.action"
+              (click)="usePower(player.card.action)">
+              {{player.card.action}}
+            </button> -->
+
+              <ng-container *ngIf="player.role === 'Villager' || player.completedAction || player.card.isPassivePower"></ng-container>
+
+              <ng-container
+                *ngIf="player.role !== 'Villager' && !player.card.isWerewolf && !player.completedAction && !player.card.isPassivePower && player.card.action !== 'Connect'">
+                <button mat-flat-button [matMenuTriggerFor]="werewolfMenu" color="accent" class="float-end black-btn"
+                  [disabled]="player.isDead" *ngIf="player.role !== 'Villager'">{{player.card.action}}</button>
+                <mat-menu #werewolfMenu="matMenu" yPosition="above">
+                  <button mat-menu-item *ngFor="let p of players | alive"
+                    (click)="action(player.card.action, player, p)"
+                    [disabled]="p.name === player.name">{{p.name}}</button>
+                </mat-menu>
+              </ng-container>
+
+              <ng-container *ngIf="player.card.isWerewolf && !player.completedAction">
+                <button mat-flat-button [matMenuTriggerFor]="werewolfMenu" color="accent" class="float-end black-btn"
+                  [disabled]="player.isDead" *ngIf="!dayTime">{{player.card.action}}</button>
+                <mat-menu #werewolfMenu="matMenu" yPosition="above">
+                  <button mat-menu-item
+                    *ngFor="let p of players | werewolf : 'isWerewolf' : !player.card.isWerewolf | alive"
+                    (click)="action(player.card.action, player, p)">{{p.name}}</button>
+                </mat-menu>
+              </ng-container>
+
+              <ng-container *ngIf="player.card.action === 'Connect' && !player.isDead" class="text-center">
+                <div *ngFor="let pl of players">
+                  <mat-checkbox [(ngModel)]="pl.connected" (change)="addToConnectedList()" [disabled]="madeConnection || pl.name === player.name || pl.isDead">{{pl.name}}</mat-checkbox>
+                </div>
+                <div class="col-12">
+                  <button mat-flat-button color="primary" (click)="connect2People()" [disabled]="connectedPeopleList.length !== 2" style="width: 100%;" [disabled]="madeConnection">
+                    Connect 2 people
+                  </button>
+                </div>
+              </ng-container>
+
+            </div>
+            <div *ngIf="dayTime">
+              <button mat-flat-button color="warn" (click)="kill(player, 'Lynching')" *ngIf="dayTime" [disabled]="lynchedSoNowRoundIsOver || player.isDead">Lynch {{player.name}}</button>
+            </div>
+          </div>
+          <div class="mt-3">{{player.card.description}}</div>
+          <!-- <div>{{player.card | json }}</div> -->
+        </mat-expansion-panel>
+      </mat-accordion>
+
+    </div>
+
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <!-- split this out to new column tomorrow -->
+      <div class="col-sm-6" *ngIf="false">
+        <!-- <div *ngFor="let player of players; let i = index;">
+        <span (click)="showOne(i)" class="h2">
+          {{player.name}}
+        </span>
+        <span *ngIf="idx === i || !rolesAreHidden">
+          <span *ngIf="player.role === W" style="font-size: 24px;">
+            🐺
+          </span>
+          <span *ngIf="player.role !== W">
+            {{player.role}}
+          </span>
+        </span>
+      </div> -->
+
+        <mat-accordion>
+          <mat-expansion-panel *ngFor="let player of players; let i = index;"
+            [disabled]="player.role === 'Villager' && currentDay > 0">
+            <mat-expansion-panel-header (click)="showOne(i)">
+              <mat-panel-title class="float-end">
+                <span class="player-cont">
+                  <span class="player-name" [ngClass]="{'dead': player.isDead}">{{player.name}}</span>
+                  <span *ngIf="player.role === 'Villager' && currentDay > 0">
+                    <!-- ✅ -->
+                    Nothing to do
+                  </span>
+                </span>
+                <span *ngIf="!rolesAreHidden">
+                  <span *ngIf="player.role === W" style="font-size: 24px;">
+                    🐺
+                  </span>
+                  <span *ngIf="player.role !== W">
+                    {{player.role}}
+                  </span>
+
+                </span>
+              </mat-panel-title>
+            </mat-expansion-panel-header>
+            <p>{{player.role}}</p>
+            <p>{{player.card.description}}</p>
+            <div>
+              <!-- <button class="btn btn-danger btn-sm" [disabled]="player.isDead" (click)="kill(player)">
+                Kill
+              </button> -->
+              <div *ngIf="currentDay > 0">
+                <button mat-flat-button [matMenuTriggerFor]="killMenu" color="warn" [disabled]="player.isDead">Kill
+                  {{player.name}}</button>
+                <mat-menu #killMenu="matMenu" yPosition="above">
+                  <button mat-menu-item (click)="kill(player, 'Lynching')">Lynching</button>
+                  <button mat-menu-item (click)="kill(player, 'Werewolf')"
+                    *ngIf="!player.card.isWerewolf">Werewolf</button>
+                </mat-menu>
+
+                <!-- <button mat-flat-button color="primary" class="float-end black-btn" *ngIf="player.card.action"
+                (click)="usePower(player.card.action)">
+                {{player.card.action}}
+              </button> -->
+
+                <ng-container *ngIf="player.role === 'Villager'"></ng-container>
+                <ng-container *ngIf="player.role !== 'Villager' && player.role !== 'Werewolf'">
+                  <button mat-flat-button [matMenuTriggerFor]="werewolfMenu" color="accent" class="float-end black-btn"
+                    [disabled]="player.isDead" *ngIf="player.role !== 'Villager'">{{player.card.action}}</button>
+                  <mat-menu #werewolfMenu="matMenu" yPosition="above">
+                    <button mat-menu-item *ngFor="let p of players | alive"
+                      (click)="action(player.card.action, player, p)"
+                      [disabled]="p.name === player.name">{{p.name}}</button>
+                  </mat-menu>
+                </ng-container>
+                <ng-container *ngIf="player.role === 'Werewolf'">
+                  <button mat-flat-button [matMenuTriggerFor]="werewolfMenu" color="accent" class="float-end black-btn"
+                    [disabled]="player.isDead" *ngIf="!dayTime">{{player.card.action}}</button>
+                  <mat-menu #werewolfMenu="matMenu" yPosition="above">
+                    <button mat-menu-item
+                      *ngFor="let p of players | werewolf : 'isWerewolf' : !player.card.isWerewolf | alive"
+                      (click)="action(player.card.action, player, p)">{{p.name}}</button>
+                  </mat-menu>
+                </ng-container>
+              </div>
+            </div>
+            <!-- <div>{{player.card | json }}</div> -->
+          </mat-expansion-panel>
+        </mat-accordion>
+
+      </div>
+
+      <div class="col-sm-6" *ngIf="loadingStory || story">
+        <div class="alert alert-info">
+          <div class="d-flex justify-content-center">
+            <div class="spinner-grow text-danger" role="status" *ngIf="loadingStory"></div>
+          </div>
+          <div style="font-size: 18px; padding-bottom: 10px;">
+            <h5>Story</h5>
+            {{story}}
+          </div>
+          <div style="white-space: pre-line;" *ngIf="themes">
+
+            <h5>Some Ideas</h5>
+            {{themes}}
+          </div>
+        </div>
+      </div>
+
+      <div class="col-sm-6">
+        <div *ngFor="let log of loggings">
+          {{log.msg}}
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

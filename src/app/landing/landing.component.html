@@ -1,0 +1,43 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12 text-center">
+            <h1 class="display-2 mb-5">Who's playing?</h1>
+            <mat-form-field class="col-4">
+                <input matInput type="text" autocomplete="off" (keydown.enter)="addName()" [(ngModel)]="newName"
+                    autofocus #name>
+                <mat-hint class="text-danger" *ngIf="players.length === 4">
+                    Need at least 5 players
+                </mat-hint>
+            </mat-form-field>
+            <!-- <button class="btn btn-success" *ngIf="players.length >= 5" (click)="startGame()">Start</button> -->
+            <button mat-stroked-button (click)="addName()"
+                style="height: 55px;margin-left: 4px;vertical-align: top;" matTooltip="Press Enter Instead!" [matTooltipPosition]="'above'">
+                Add name
+            </button>
+                
+            <button mat-stroked-button *ngIf="players.length >= 5" (click)="startGame()"
+                style="height: 55px;margin-left: 4px;vertical-align: top;" color="warn">Start</button>
+            <h6>
+                <span *ngIf="players.length >= 5">
+                    <span style="font-size: 24px;">{{players.length}} </span>players
+                </span>
+                <!-- <span style="font-size: 24px;" *ngIf="players.length === 0 && newName.length === 0"> Add Name </span> -->
+                <!-- <div *ngIf="players.length < 5" class="text-danger">Need at least 5 players</div> -->
+            </h6>
+            
+            <div class="col-md-4 offset-md-4">
+                <table>
+                    <tr *ngFor="let name of players; let i = index">
+                        <td style="width: 200px;">
+                            <span class="display-4">{{name}}</span>
+                            <!-- <span class="display-4">{{name}}</span> -->
+                        </td>
+                        <td>
+                            <i class="bi bi-x-circle-fill text-danger delete" (click)="removeName(i)"></i>
+                        </td>
+                    </tr>
+                </table>
+            </div>
+
+        </div>
+    </div>

@@ -1,0 +1,29 @@
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <div class="text-center">
+                <h1>Bingo!</h1>
+                <div>{{history.length}}</div>
+            </div>
+        </div>
+
+
+    </div>
+    <div class="row">
+        <div class="col-12 text-center">
+            <button class="btn" [ngClass]="{'btn-danger': !readyForNextWord, 'btn-success': readyForNextWord }" (click)="getWord()" *ngIf="boardSpots.length > 0">Next</button>
+            <button class="btn btn-warning" *ngIf="boardSpots.length === 0">Someone Should've Won By Now</button>
+        </div>
+        <div class="col-sm-9 offset-sm-3">
+            <ul class="list-group">
+                <li class="h4" *ngFor="let word of history">
+                    {{word}}
+                </li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<div class="text-center">
+    <button (click)="makeNewList()" class="btn btn-info btn-sm" style="position: absolute; bottom: 0"> New Game </button>
+</div>

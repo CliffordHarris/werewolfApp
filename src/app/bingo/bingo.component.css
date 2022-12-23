@@ -1,0 +1,7 @@
+ul.list-group {
+    display: grid;
+    grid-template-columns: repeat(2, 5fr);
+    grid-template-rows: repeat(13, 3fr);
+    grid-column-gap: 5em;
+    grid-auto-flow: column;
+}
