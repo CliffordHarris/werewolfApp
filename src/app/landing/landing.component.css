@@ -1,5 +1,15 @@
-.delete {
-    font-size: 18px;
-    padding: 15px;
-    cursor: pointer;
+.playerInputWrapper .mdc-text-field--filled {
+    background-color: red;
+  }
+
+.mat-mdc-form-field-infix .mdc-floating-label {
+  font-size: 2rem;
+}
+
+.playerInputWrapper .assigned-chip{
+     background-color: red;
+}
+
+.example-chip-list {
+  width: 100%;
 }

@@ -51,7 +51,6 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     // this.setupGame();
     // this.events = [...allEvents[this.STARTING_DAY]];
-    
     // this.allGameEvents = {...allEvents};
     this.events = [...allEvents[this.STARTING_DAY]];
     console.log(allEvents[0]);
@@ -59,7 +58,10 @@ export class GameComponent implements OnInit {
 
   getLatestProtector(targetedPlayer: any){
     const allProtectors = targetedPlayer.actionFrom.filter((pl: any) => pl.action === AttackedResult.Protect);
-    const protectorOfTargetedPlayer = this.players.filter((p1: any) => allProtectors.map((pr: any) => pr.name).includes(p1.name)).sort((a,b) => a.card.isOneTimeUsePower - b.card.isOneTimeUsePower)[0];
+    const protectorOfTargetedPlayer = this.players.filter((p1: any) =>
+      allProtectors.map((pr: any) => pr.name)
+        .includes(p1.name))
+        .sort((a,b) => a.card.isOneTimeUsePower - b.card.isOneTimeUsePower)[0];
     return protectorOfTargetedPlayer;
   }
 
@@ -134,14 +136,14 @@ export class GameComponent implements OnInit {
     attacker?.actionTo?.push(actionObjForP1);
     targetedPlayer.actionFrom.push(actionObjForP2);
 
-    // *** bodyguard 
+    // *** bodyguard
     // remove the name when day starts
     // player1.actionTo.push(player2.name);
-    // player2.actionFrom.push(player1.name);    
+    // player2.actionFrom.push(player1.name);
 
     // *** Hunter requires different logic
 
-    
+
     // const verb = actionObjForP1.text || action;
     // this.log(`${player1.name} ${verb} ${player2.name}`);
     this.log(actionObjForP1.display);
@@ -182,7 +184,7 @@ export class GameComponent implements OnInit {
     firstPlayer.actionFrom.push(actionObjForP1);
     secondPlayer.actionFrom.push(actionObjForP2);
     cupidPlayer.actionTo.push(actionObjForCupid);
-    
+
     this.madeConnection = true;
     cupidPlayer.completedAction = this.madeConnection;
     // firstPlayer.actionFrom.push(cupid);
@@ -233,8 +235,8 @@ export class GameComponent implements OnInit {
     if(message === "Accuse" && skip) message = `Skip ${message}`;
 
     // TODO Turn this on later
-    this.getStoryLine(message);
-    
+    // this.getStoryLine(message);
+
     this.log(message);
 
     const remaining = allEvts.filter(x => !x.done).length;
@@ -283,7 +285,7 @@ export class GameComponent implements OnInit {
     this.events = [...events];
     console.log("Keep Playing Game");
   }
-  
+
   changeDay() {
     this.dayTime = !this.dayTime;
     if(this.currentDay === 0) {
@@ -318,7 +320,7 @@ export class GameComponent implements OnInit {
   }
   getEventsForTimeOfDay(day: boolean = true) {
     if (day) {
-      // Lynch 
+      // Lynch
       // Vote
       // Defend
 
@@ -432,13 +434,13 @@ export class GameComponent implements OnInit {
   // Let werewolves know each other ✅
   // Suggest several settings ✅
   // Timer for Day time ✅
-  // Add night timer 
-  // Vote and Defense Timers 
+  // Add night timer
+  // Vote and Defense Timers
   // Skip accuse ✅
 
   // Loop per round for all special players
 
   // Log events from each round and summarize ✅
-  // Determine winner and predict winner based on decisions 
-  // 
+  // Determine winner and predict winner based on decisions
+  //
 }
