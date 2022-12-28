@@ -10,7 +10,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 export class LandingComponent implements OnInit {
   newName: string = '';
-  players: Array<{name: string, color: string}> = [];
+  players: Array<{name: string, color: string}> = []; // idk, it works lol 🤷‍♂️
   @ViewChild('name') nameEl: ElementRef | undefined;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;
@@ -32,6 +32,7 @@ export class LandingComponent implements OnInit {
   }
 
   playerColor() {
+    // https://color.adobe.com/explore
     const colors = [
       '#8C6985',
       '#442E5A',
@@ -63,9 +64,7 @@ export class LandingComponent implements OnInit {
   }
 
   removeName(idx: number) {
-    console.log('1 this players: ', this.players);
     this.players.splice(idx, 1);
-    console.log('2 this players: ', this.players);
     this.savePlayerToLocalStorage(this.players);
     this.nameEl?.nativeElement.focus();
   }

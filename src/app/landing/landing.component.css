@@ -1,15 +1,15 @@
-.playerInputWrapper .mdc-text-field--filled {
-    background-color: red;
-  }
-
 .mat-mdc-form-field-infix .mdc-floating-label {
   font-size: 2rem;
 }
 
-.playerInputWrapper .assigned-chip{
-     background-color: red;
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  padding: 1rem;
 }
 
-.example-chip-list {
+.player-list {
   width: 100%;
+}
+
+.player-list > div{
+  padding: 1rem 2rem;
 }
