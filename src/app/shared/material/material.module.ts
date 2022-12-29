@@ -1,28 +1,30 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 
-import { MatFormFieldModule } from '@angular/material/form-field';
-import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatGridListModule } from '@angular/material/grid-list';
-import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatCheckboxModule } from '@angular/material/checkbox';
+import { MatChipsModule } from '@angular/material/chips';
 import { MatExpansionModule } from '@angular/material/expansion';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatGridListModule } from '@angular/material/grid-list';
+import { MatIconModule } from '@angular/material/icon'
+import { MatInputModule } from '@angular/material/input';
 import { MatMenuModule } from '@angular/material/menu';
-import {MatCheckboxModule} from '@angular/material/checkbox';
+import { MatTooltipModule } from '@angular/material/tooltip';
 @NgModule({
   declarations: [],
-  imports: [CommonModule],
+  imports: [CommonModule, MatChipsModule],
   exports: [
-
-    MatFormFieldModule,
-    MatInputModule,
     MatButtonModule,
-    MatGridListModule,
-    MatTooltipModule,
+    MatCheckboxModule,
+    MatChipsModule,
     MatExpansionModule,
+    MatFormFieldModule,
+    MatGridListModule,
+    MatIconModule,
+    MatInputModule,
     MatMenuModule,
-    MatCheckboxModule
-    
+    MatTooltipModule
   ]
 })
 export class MaterialModule { }

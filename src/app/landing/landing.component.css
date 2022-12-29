@@ -1,5 +1,15 @@
-.delete {
-    font-size: 18px;
-    padding: 15px;
-    cursor: pointer;
+.mat-mdc-form-field-infix .mdc-floating-label {
+  font-size: 2rem;
+}
+
+.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+  padding: 1rem;
+}
+
+.player-list {
+  width: 100%;
+}
+
+.player-list > div{
+  padding: 1rem 2rem;
 }

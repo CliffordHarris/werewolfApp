@@ -1,43 +1,43 @@
 <div class="container">
     <div class="row">
-        <div class="col-12 text-center">
-            <h1 class="display-2 mb-5">Who's playing?</h1>
-            <mat-form-field class="col-4">
-                <input matInput type="text" autocomplete="off" (keydown.enter)="addName()" [(ngModel)]="newName"
-                    autofocus #name>
-                <mat-hint class="text-danger" *ngIf="players.length === 4">
-                    Need at least 5 players
-                </mat-hint>
-            </mat-form-field>
-            <!-- <button class="btn btn-success" *ngIf="players.length >= 5" (click)="startGame()">Start</button> -->
-            <button mat-stroked-button (click)="addName()"
-                style="height: 55px;margin-left: 4px;vertical-align: top;" matTooltip="Press Enter Instead!" [matTooltipPosition]="'above'">
-                Add name
-            </button>
-                
-            <button mat-stroked-button *ngIf="players.length >= 5" (click)="startGame()"
-                style="height: 55px;margin-left: 4px;vertical-align: top;" color="warn">Start</button>
-            <h6>
-                <span *ngIf="players.length >= 5">
-                    <span style="font-size: 24px;">{{players.length}} </span>players
-                </span>
-                <!-- <span style="font-size: 24px;" *ngIf="players.length === 0 && newName.length === 0"> Add Name </span> -->
-                <!-- <div *ngIf="players.length < 5" class="text-danger">Need at least 5 players</div> -->
-            </h6>
-            
-            <div class="col-md-4 offset-md-4">
-                <table>
-                    <tr *ngFor="let name of players; let i = index">
-                        <td style="width: 200px;">
-                            <span class="display-4">{{name}}</span>
-                            <!-- <span class="display-4">{{name}}</span> -->
-                        </td>
-                        <td>
-                            <i class="bi bi-x-circle-fill text-danger delete" (click)="removeName(i)"></i>
-                        </td>
-                    </tr>
-                </table>
+        <div class="col-12">
+            <div class="col-md-8 offset-md-2 player-input-wrapper">
+              <mat-form-field class="player-list" appearance="fill">
+                  <mat-label>Who's playing?</mat-label>
+                  <mat-chip-grid #chipGrid aria-label="Enter players" class="zzzzz">
+                      <input
+                          autocomplete="off"
+                          placeholder="New player's name..."
+                          [matChipInputFor]="chipGrid"
+                          [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
+                          [matChipInputAddOnBlur]="addOnBlur"
+                          (matChipInputTokenEnd)="addName()"
+                          [(ngModel)]="newName"
+                          autofocus #name
+                      />
+                      </mat-chip-grid>
+                      <mat-hint class="text-danger" *ngIf="players!.length < 5">
+                          Min 5 players required.
+                      </mat-hint>
+                      <mat-chip-listbox class="mat-mdc-chip-set-stacked" aria-label="Color selection">
+                          <mat-chip-option *ngFor="let player of players; let i = index" selected [ngStyle]="{'background-color': getPlayerColor(i)}">
+                              {{player.name}}
+                              <button matChipRemove [attr.aria-label]="'remove ' + players" (click)="removeName(i)">
+                                  <mat-icon>cancel</mat-icon>
+                              </button>
+                          </mat-chip-option>
+                      </mat-chip-listbox>
+              </mat-form-field>
+              <div class="row justify-content-between">
+                <div class="col-4">
+                  <button mat-stroked-button *ngIf="players!.length >= 5" (click)="startGame()" color="primary">
+                      <mat-icon>forward</mat-icon> Start game with {{players.length}} players
+                  </button>
+                </div>
+                <div class="col-4 d-flex justify-content-end">
+                  <button mat-stroked-button *ngIf="players!.length >= 5" (click)="deleteAllPlayers()" color="warn"> <mat-icon>delete</mat-icon> Delete all players</button>
+                </div>
             </div>
-
+          </div>
         </div>
     </div>
