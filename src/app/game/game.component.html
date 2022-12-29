@@ -95,7 +95,9 @@
 
                 <span style="vertical-align: text-bottom;" *ngIf="!dayTime && currentDay != 0">
                   <span *ngIf="!player.completedAction && !player.card.isPassivePower">🔲 </span>
-                  <span *ngIf="player.completedAction || player.card.isPassivePower">✅ </span>
+                  <span *ngIf="player.completedAction || player.card.isPassivePower" 
+                    matTooltip="Done with tasks for the night"
+                    [matTooltipPosition]="'above'">✅ </span>
                 </span>
 
                 <span class="player-name" [ngClass]="{'dead': player.isDead}">{{player.name}}</span>

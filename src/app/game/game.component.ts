@@ -58,12 +58,16 @@ export class GameComponent implements OnInit {
   ngOnInit() {
     // this.setupGame();
     // this.events = [...allEvents[this.STARTING_DAY]];
+<<<<<<< Updated upstream
+=======
+
+>>>>>>> Stashed changes
     // this.allGameEvents = {...allEvents};
     this.events = [...allEvents[this.STARTING_DAY]];
     console.log(allEvents[0]);
   }
 
-  getLatestProtector(targetedPlayer: any){
+  getLatestProtector(targetedPlayer: any) {
     const allProtectors = targetedPlayer.actionFrom.filter((pl: any) => pl.action === AttackedResult.Protect);
     const protectorOfTargetedPlayer = this.players.filter((p1: any) =>
       allProtectors.map((pr: any) => pr.name)
@@ -72,27 +76,22 @@ export class GameComponent implements OnInit {
     return protectorOfTargetedPlayer;
   }
 
-  kill(player: any, method: string) {
-    // player.isDead = true;
-    // const protectors = player.actionFrom.filter((p: any) => p.action === AttackedResult.Protect);
-    // const protectorOfPlayer = this.players.filter((p1: any) => protectors.map((pr: any) => pr.name)
-    //                                                                   .includes(p1.name))
-    //                                                                   .sort((a,b) => a.card.isOneTimeUsePower - b.card.isOneTimeUsePower)[0];
+  kill(player: any, method: string) { // LYNCH function name
 
     const protectorOfPlayer = this.getLatestProtector(player);
-    if(protectorOfPlayer){
+    if (protectorOfPlayer) {
       console.log(player.name, "has a Protector:", protectorOfPlayer.name, "... SO BLOCKED BITCH! Muahahaha");
       player.isDead = false;
       player.actionFrom = player.actionFrom.filter((x: any) => x.name !== protectorOfPlayer.name);
     } else {
       player.isDead = true;
       const connected = player.actionFrom.find((x: any) => x.action === AttackedResult.CollateralDamage);
-      if(connected){
+      player.actionFrom = player.actionFrom.filter((x: any) => x.name !== connected.name);
+      if (connected) {
         const connectedPlayerObj = this.players.find((p: any) => !p.isDead && p.name === connected.name);
-        if(connectedPlayerObj) this.kill(connectedPlayerObj, AttackedResult.CollateralDamage);
+        if (connectedPlayerObj) this.kill(connectedPlayerObj, AttackedResult.CollateralDamage);
       }
     }
-
 
     this.lynchedSoNowRoundIsOver = this.players.find(player => player.isDead && method === 'Lynching')
     for (let i = 0; i < this.events.length - 1; i++) {
@@ -103,22 +102,25 @@ export class GameComponent implements OnInit {
 
   action(action: string, attacker: any, targetedPlayer: any) {
     attacker.completedAction = true;
-    if(attacker?.card?.isWerewolf && attacker?.card?.action === 'Eat'){
+    if (attacker?.card?.isWerewolf && attacker?.card?.action === 'Eat') {
 
       // TODO SORT by weakest protection first like the nightly one from the bodyguard
       // const protectorsOfP1 = targetedPlayer.actionFrom.filter((pl: any) => pl.action === AttackedResult.Protect);
       // const protectorOfP1 = this.players.filter((p1: any) => protectorsOfP1.map((pr: any) => pr.name).includes(p1.name)).sort((a,b) => a.card.isOneTimeUsePower - b.card.isOneTimeUsePower)[0];
       const protectorOfP1 = this.getLatestProtector(targetedPlayer);
-      if(protectorOfP1){
+      if (protectorOfP1) {
         console.log(targetedPlayer.name, "has a Protector:", protectorOfP1);
         targetedPlayer.isDead = false;
+        console.log("Before", targetedPlayer.actionFrom);
         targetedPlayer.actionFrom = targetedPlayer.actionFrom.filter((x: any) => x.name !== protectorOfP1.name);
+        console.log("After", targetedPlayer.actionFrom);
       } else {
         targetedPlayer.isDead = true;
-        const connected = targetedPlayer.actionFrom.find((x: any) => x.action === "CollateralDamage");
-        if(connected){
+        const connected = targetedPlayer.actionFrom.find((x: any) => x.action === AttackedResult.CollateralDamage);
+        targetedPlayer.actionFrom = targetedPlayer.actionFrom.filter((x: any) => x.name !== connected.name);
+        if (connected) {
           const connectedPlayerObj = this.players.find((p: any) => p.name === connected.name);
-          this.action("", attacker, connectedPlayerObj);
+          if (connectedPlayerObj) this.action("", attacker, connectedPlayerObj);
         }
       }
     }
@@ -156,15 +158,17 @@ export class GameComponent implements OnInit {
     this.log(actionObjForP1.display);
   }
 
-  addToConnectedList(){
+  addToConnectedList() {
     this.connectedPeopleList = this.players.filter(x => x.connected);
   }
 
-  connect2People(){
-    const list = this.connectedPeopleList.map(x => {return {
-      name: x.name,
-      role: x.role
-    }});
+  connect2People() {
+    const list = this.connectedPeopleList.map(x => {
+      return {
+        name: x.name,
+        role: x.role
+      }
+    });
 
     let firstPlayer = this.players.find(x => list[0].name === x.name && list[0].role === x.role);
     let secondPlayer = this.players.find(x => list[1].name === x.name && list[1].role === x.role);
@@ -203,7 +207,7 @@ export class GameComponent implements OnInit {
     const oneSec = 1000;
     this.timeStartedGame = Date.now();
     setInterval(() => {
-      let timeDiff = (Date.now() - this.timeStartedGame)/1000;
+      let timeDiff = (Date.now() - this.timeStartedGame) / 1000;
       let seconds = Math.floor(timeDiff % 60);
       let secondsAsString = seconds < 10 ? "0" + seconds : seconds;
       timeDiff = Math.floor(timeDiff / 60);
@@ -215,7 +219,7 @@ export class GameComponent implements OnInit {
 
   markDone(idx: number, skip = false) {
     let allEvts = [...allEvents[this.currentDay]];
-    if(this.countOfDays > 1){
+    if (this.countOfDays > 1) {
       allEvts = [...allEvts.filter((x: EventObj) => x.happensDaily)];
     }
 
@@ -228,8 +232,8 @@ export class GameComponent implements OnInit {
 
     const allWithPowers = this.players.filter(a => a.card.action && !a.completedAction);
     const listOfRolesWithPowers = [...new Set(this.players.filter(a => !a.isDead && a.card.action && !a.completedAction && !a.card.isPassivePower).map(a => a.role))];
-    if(currentEvent.checkForSpecialPowers && listOfRolesWithPowers.length > 1){
-      if(allWithPowers.length > 1){
+    if (currentEvent.checkForSpecialPowers && listOfRolesWithPowers.length > 1) {
+      if (allWithPowers.length > 1) {
         console.log(`${listOfRolesWithPowers.length} people let to do their tasks`);
       }
       return;
@@ -237,9 +241,9 @@ export class GameComponent implements OnInit {
 
     currentEvent.done = true;
     let message = currentEvent.msg;
-    if(message === "You show everyone their roles") this.hideRoles();
-    if(message === "Start the day") this.updateTime();
-    if(message === "Accuse" && skip) message = `Skip ${message}`;
+    if (message === "You show everyone their roles") this.hideRoles();
+    if (message === "Start the day") this.updateTime();
+    if (message === "Accuse" && skip) message = `Skip ${message}`;
 
     // TODO Turn this on later
     // this.getStoryLine(message);
@@ -295,15 +299,15 @@ export class GameComponent implements OnInit {
 
   changeDay() {
     this.dayTime = !this.dayTime;
-    if(this.currentDay === 0) {
+    if (this.currentDay === 0) {
       this.currentDay = 1;
     } else {
       this.currentDay = this.dayTime ? TimeOfDay.Day : TimeOfDay.Night;
     }
   }
 
-  getStoryLine(msg: string){
-    if(msg === "Everyone Wake Up!") {
+  getStoryLine(msg: string) {
+    if (msg === "Everyone Wake Up!") {
       let prompt = "generate an intro to ultimate werewolf game";
       prompt = "generate an short dramatic intro to ultimate werewolf game in 2nd person";
 
@@ -317,7 +321,7 @@ export class GameComponent implements OnInit {
     }
   }
 
-  getThemes(){
+  getThemes() {
     let prompt = "short list of 5 awesome places to set the story line of ultimate werewolf";
     this.openAIService.generateText(prompt).then(resp => {
       console.log(resp);

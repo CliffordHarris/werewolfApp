@@ -8,32 +8,53 @@ import { LocalStorageService } from '../local-storage.service';
   styleUrls: ['./bingo.component.css']
 })
 export class BingoComponent {
+  // bingoWords = [
+  //   "Bag of Toys",
+  //   "Snowflake",
+  //   "Star",
+  //   "Peppermint Candy",
+  //   "Rudolph",
+  //   "Santa Hat",
+  //   "Frosty The Snowman",
+  //   "Gingerbread Man",
+  //   "Bells",
+  //   "Christmas Tree",
+  //   "Boy Elf",
+  //   "Gingerbread House",
+  //   "Santa Claus",
+  //   "Girl Elf",
+  //   "Mistletoe",
+  //   "Santa's Sleigh",
+  //   "Penguin",
+  //   "Stocking",
+  //   "Candy Cane",
+  //   "Ornament",
+  //   "Christmas Lights",
+  //   "Sweater",
+  //   "Hot Cocoa",
+  //   "Fireplace"
+  // ]
   bingoWords = [
-    "Bag of Toys",
-    "Snowflake",
-    "Star",
-    "Peppermint Candy",
-    "Rudolph",
-    "Santa Hat",
-    "Frosty The Snowman",
-    "Gingerbread Man",
-    "Bells",
-    "Christmas Tree",
-    "Boy Elf",
-    "Gingerbread House",
-    "Santa Claus",
-    "Girl Elf",
-    "Mistletoe",
-    "Santa's Sleigh",
-    "Penguin",
-    "Stocking",
-    "Candy Cane",
-    "Ornament",
-    "Christmas Lights",
-    "Sweater",
-    "Hot Cocoa",
-    "Fireplace"
+    'dan',
+    'khou',
+
+    'hue',
+    'sandy',
+    
+    'joe & pakou',
+
+    'shmoe',
+    'sheng',
+
+    'alex',
+    'iz',
+
+    'lia',
+    'sheng',
+    'wendy',
+    'sher',
   ]
+
   boardSpots: string[] = [];
   history: string[] = [];
   readyForNextWord: boolean = true;
@@ -42,8 +63,8 @@ export class BingoComponent {
     private router: Router,
     private localStorage: LocalStorageService
   ) {
-    console.log(this.router.url)
-
+    // console.log(this.router.url)
+    console.log(this.bingoWords);
     const currRemainingWords = this.localStorage.get('words');
     if (currRemainingWords) {
       this.boardSpots = currRemainingWords as [];
