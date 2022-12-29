@@ -2,6 +2,11 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
+interface Player {
+  name: string,
+  color: string,
+}
+
 @Component({
   selector: 'app-landing',
   templateUrl: './landing.component.html',
@@ -10,7 +15,7 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 
 export class LandingComponent implements OnInit {
   newName: string = '';
-  players: Array<{name: string, color: string}> = []; // idk, it works lol 🤷‍♂️
+  players: Array<Player> = [];
   @ViewChild('name') nameEl: ElementRef | undefined;
   readonly separatorKeysCodes = [ENTER, COMMA] as const;
   addOnBlur = true;

@@ -2,7 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { Character } from '../interface/character';
 import { LocalStorageService } from '../local-storage.service';
-import { allCharacters, allEvents, EventObj, werewolfLookup, TimeOfDay, AttackedResult, ActionWordsLookup } from './GameConstants';
+import { allCharacters,
+  allEvents,
+  EventObj,
+  werewolfLookup,
+  TimeOfDay,
+  AttackedResult,
+  ActionWordsLookup
+} from './GameConstants';
 import { OpenAIService } from '../open-ai.service';
 
 @Component({
@@ -370,9 +377,9 @@ export class GameComponent implements OnInit {
   }
 
   setRole(arr: any[]): void {
-    arr.forEach((n, i) => {
+    arr.forEach((player, i) => {
       this.players.push({
-        name: n,
+        name: player.name,
         role: this.playingCards[i].name,
         card: this.playingCards[i],
         actionTo: [], // TODO maybe remove
@@ -411,9 +418,13 @@ export class GameComponent implements OnInit {
   }
 
   getNames(): void {
-    const names = localStorage.getItem('players');
-    if (names) {
-      this.names = JSON.parse(names);
+    const players = localStorage.getItem('players');
+
+    console.log('players', players);
+    if (players) {
+      // TODO: "names" isn't really accurate anymore,
+      // it's now a person object created via `addName()`
+      this.names = JSON.parse(players);
     }
   }
 
