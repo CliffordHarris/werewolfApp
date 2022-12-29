@@ -57,12 +57,6 @@ export class GameComponent implements OnInit {
 
   ngOnInit() {
     // this.setupGame();
-    // this.events = [...allEvents[this.STARTING_DAY]];
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
-    // this.allGameEvents = {...allEvents};
     this.events = [...allEvents[this.STARTING_DAY]];
     console.log(allEvents[0]);
   }
