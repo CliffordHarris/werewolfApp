@@ -1,15 +1,26 @@
-.mat-mdc-form-field-infix .mdc-floating-label {
-  font-size: 2rem;
+.mat-mdc-form-field:not(.mat-form-field-no-animations) .mdc-text-field__input {
+  font-size: 1.5rem;
+  padding:1rem;
 }
 
-.mdc-text-field--filled:not(.mdc-text-field--disabled) {
+.mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+  font-size: 2rem !important;
+}
+
+.mat-mdc-standard-chip.mdc-evolution-chip--selectable:not(.mdc-evolution-chip--with-primary-icon) {
+  margin-left: 1.5rem;
+  margin-right: 1.5rem;
+}
+
+.mat-mdc-text-field-wrapper:not(.mdc-text-field--outlined) .mat-mdc-form-field-infix {
+  background: white !important;
   padding: 1rem;
+}
+
+.mat-mdc-chip-set-stacked {
+  padding-bottom: 1rem;
 }
 
 .player-list {
   width: 100%;
-}
-
-.player-list > div{
-  padding: 1rem 2rem;
 }
