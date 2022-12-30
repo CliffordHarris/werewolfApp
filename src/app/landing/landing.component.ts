@@ -1,11 +1,7 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
-
-interface Player {
-  name: string,
-  color: string,
-}
+import { Player } from '../interface/player';
 
 @Component({
   selector: 'app-landing',
