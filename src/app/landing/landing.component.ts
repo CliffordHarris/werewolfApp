@@ -35,15 +35,15 @@ export class LandingComponent implements OnInit {
   playerColor() {
     // https://color.adobe.com/explore
     const colors = [
-      '#8C6985',
-      '#442E5A',
+      '#8C0059',
       '#150929',
+      '#2E5458',
       '#03010C',
       '#427274',
-      '#192B38',
-      '#2E5458',
       '#4E7367',
-      '#8C0059',
+      '#8C6985',
+      '#192B38',
+      '#442E5A',
     ];
 
     const randomColor = Math.floor(Math.random() * colors.length);
